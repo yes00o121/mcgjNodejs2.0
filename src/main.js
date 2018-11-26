@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import Element from 'element-ui'
+import E from 'wangeditor'
 import 'element-ui/lib/theme-chalk/index.css'
 import baseConfig from '../config/baseConfig'//配置
 Vue.use(Element)
