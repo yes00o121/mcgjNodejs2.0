@@ -1,13 +1,15 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
-import Element from 'element-ui'
-import E from 'wangeditor'
-import 'element-ui/lib/theme-chalk/index.css'
+import router from './router'//路由
+import Element from 'element-ui'//引用elementui
+import E from 'wangeditor'//富文本框
+import 'element-ui/lib/theme-chalk/index.css'//elementui 样式
 import baseConfig from '../config/baseConfig'//配置
+import common from './util/common'//通用工具
 Vue.use(Element)
 Vue.use(router);
 Vue.prototype.baseConfig = baseConfig;//设置全局配置文件
+Vue.prototype.common = common;//设置全局公共类
 router.beforeEach((to,form,next)=>{//路由拦截
   //跳转页面前清空背景图片
   $('#main').css('background-image','')
@@ -21,7 +23,9 @@ router.beforeEach((to,form,next)=>{//路由拦截
 router.afterEach(()=>{//页面跳转之后触发
 
 })
+
 /******************************************* 全局方法 ***************************************************************/
+
 Vue.prototype.isLogin=function(){//全局方法，判断用户是否登录
   var user = localStorage.user;
   if(user != null && user != '' && user.substring(0,1)=='{' && user.substring(user.length,user.length-1) == '}'){

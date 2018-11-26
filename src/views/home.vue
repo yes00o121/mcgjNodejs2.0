@@ -29,6 +29,9 @@ export default {
   components : {topHome,menuHome,bottomHome,bodyHome,utilHome},
   mounted(){
 
+  },
+  methods : {
+
   }
 }
 </script>

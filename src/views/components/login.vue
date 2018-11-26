@@ -9,7 +9,7 @@
     <el-form-item label="账号"  class="login-input">
       <el-input v-model="form.account" ></el-input>
     </el-form-item>
-    <el-form-item label = "密码" class="login-input">
+    <el-form-item type="password" label = "密码" class="login-input">
         <el-input v-model="form.password"></el-input>
     </el-form-item>
     <el-form-item label = "验证码" style="width:200px">
@@ -30,7 +30,6 @@
   </el-dialog>
 </template>
 <script>
-import baseConfig from '../../../config/baseConfig'
 export default {
   data(){
     return {
@@ -41,8 +40,8 @@ export default {
           checkCode : '',
           verificationCode : localStorage.verificationCode
       },
-      yzUrl : baseConfig.localhost+'/common/generateVerification?verificationCode='+localStorage.verificationCode,
-      loginUrl : baseConfig.localhost+'/user/login'
+      yzUrl : this.baseConfig.localhost + '/common/generateVerification?verificationCode='+localStorage.verificationCode,
+      loginUrl : '/user/login'
     }
   },
   methods : {
@@ -54,30 +53,32 @@ export default {
           done();
     },
     add(){//用户登录方法
-        $.ajax({
-            url : this.loginUrl,
-            data : this.form,
-            type : 'post',
-            success:(result)=>{
-                  if(result.success){
-                      this.dialogVisible = false;//关闭窗口
-                      //登录成功将返回的token存入localStorage中，刷新页面
-                      this.setUser(result.result);//将user写入localStorage中
-                      location.reload();//页面重新加载
-                      //this.$router.push({
-                      //  path : '/'
-                      //})
-                  }else{
-                    this.$alert(result.message,'提示');
-                  }
-            },
-            error : ()=>{
-                throw "登录失败";
-            }
+        this.common.ajax({
+          url : this.loginUrl,
+          type : 'post',
+          data : {
+            account : this.form.account,
+            password : Base64.encode(this.form.password),//加密
+            checkCode : this.form.checkCode,
+            verificationCode : this.form.verificationCode
+          },
+          success:(res)=>{
+              if(res.success){
+                    this.dialogVisible = false;//关闭窗口
+                    //登录成功将返回的token存入localStorage中，刷新页面
+                    this.setUser(res.result);//将user写入localStorage中
+                    location.reload();//页面重新加载
+                    //this.$router.push({
+                    //  path : '/'
+                    //})
+              }else{
+                  this.$alert(res.message,'提示');
+              }
+          }
         })
     },
     loadverificationCode(e){//加载验证码方法
-        e.target.src = this.yzUrl+'&random='+Math.random();
+        e.target.src =  this.yzUrl+'&random='+Math.random();
     }
   },
 }
