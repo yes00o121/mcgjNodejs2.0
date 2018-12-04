@@ -3,14 +3,13 @@
   <el-dialog
     title="提示"
     :visible.sync="dialogVisible"
-    width="20%"
     :before-close="handleClose">
     <el-form label-width="80px" ref="form" :model="form">
       <el-form-item label="贴吧名称">
       <el-input v-model="form.conversationName"></el-input>
       </el-form-item>
       <el-form-item label = "贴吧类型">
-          <comSelect :codeValue="codeValue" ref="comSelect"></comSelect>
+          <comSelect :codeValue="codeValue" ref="comSelect" ></comSelect>
       </el-form-item>
       <el-form-item label = "贴吧头像">
           <comImage ref="comImage"></comImage>
@@ -92,5 +91,8 @@ import baseConfig from '../../../config/baseConfig'//配置
   }
 </script>
 <style>
-
+comSelect{
+  max-width:400px;
+  width:auto;
+}
 </style>

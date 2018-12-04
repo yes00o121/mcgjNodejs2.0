@@ -76,7 +76,7 @@ export default {
           statisticsUrl : this.baseConfig.localhost+'/conversation/selectConversationStatistics',//获取用户发贴和关注量等数据
           datas : '',//贴吧名称当前贴子标题等数据
           backgroundUrl : this.baseConfig.localhost+this.baseConfig.imgUrl+'?imgId=',
-          imgUrl : this.baseConfig + this.baseConfig.imgUrl+'/imgId=',//图片地址
+          imgUrl : this.baseConfig.localhost+this.baseConfig.imgUrl+'?imgId=',//图片地址
           floor : {//帖子楼层数据
               datas : '',
               start : this.$route.query.start,//开始页,不能为0或负数
@@ -145,7 +145,7 @@ export default {
             }
             first+=5;//获取第一张图片开始位置,加上字符串的长度
             var text = html2.substring(first,html2.length);//地址开始位置截取到末尾
-            var last = text.indexOf('">');
+            var last = text.indexOf('" />');
             var address = text.substring(0,last);//截取到图片地址末尾
             //判断地址是否为视频，如果是视频地址退出当前循环
             //如果该地址是正常的图片地址追加显示

@@ -3,14 +3,14 @@
 <el-dialog
   title="登录"
   :visible.sync="dialogVisible"
-  width="20%"
+
   :before-close="handleClose">
-  <el-form label-width="80px" ref="form" :model="form">
+  <el-form  ref="form" :model="form">
     <el-form-item label="账号"  class="login-input">
       <el-input v-model="form.account" ></el-input>
     </el-form-item>
-    <el-form-item type="password" label = "密码" class="login-input">
-        <el-input v-model="form.password"></el-input>
+    <el-form-item  label = "密码" class="login-input">
+        <el-input type="password" v-model="form.password"></el-input>
     </el-form-item>
     <el-form-item label = "验证码" style="width:200px">
         <el-row >
@@ -80,15 +80,16 @@ export default {
     loadverificationCode(e){//加载验证码方法
         e.target.src =  this.yzUrl+'&random='+Math.random();
     }
-  },
+  }
 }
 </script>
 <style>
 .login-input{
-  width : 300px;
+
 }
 .login-verificationCode{
     margin-left:90px;
     cursor:pointer;
 }
+
 </style>

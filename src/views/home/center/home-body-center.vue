@@ -15,7 +15,7 @@
                       </div>
                     </div>
                     <div style="margin-bottom:5px;">
-                      <router-link style="text-decoration:none;color:#2d64b3"  target="_blank" title="data.title" :to="{path:'/conversationChildChild',query : {id:data.id,start:1}}">
+                      <router-link  style="text-decoration:none;color:#2d64b3"  target="_blank" title="data.title" :to="{path:'/conversationChildChild',query : {id:data.id,start:1}}">
                           {{data.title}}
                       </router-link>
                       <span style="margin-left:10px;font-size:12px;">
@@ -46,7 +46,7 @@ export default {
   data(){
     return {
         activeName: 'newest',
-        newestUrl : this.baseConfig.localhost+'/conversation/selectNewestConversation',//最新数据
+        newestUrl : '/conversation/selectNewestConversation',//最新数据
         imgUrl : this.baseConfig.localhost+this.baseConfig.imgUrl+'?imgId=',//图片url
         datas:[]//最新动态数据源
     };
@@ -135,17 +135,13 @@ export default {
           }
       },
       findNewestConversation : function(){//获取最新的动态数据源
-          var _this = this;
-          $.ajax({
-              url : _this.newestUrl,
+          this.common.ajax({
+              url : this.newestUrl,
               type : 'post',
-              async: false,
-              success(result){
-                if(result.success){
-                    _this.datas = result.result;
-                }else{
-                  throw "获取动态数据失败";
-                }
+              async : false,//需要同步执行
+              success : (result)=>{
+                  this.datas = result.result;
+                  console.log(this.datas)
               }
           })
       },

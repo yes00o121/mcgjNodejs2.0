@@ -64,11 +64,11 @@ export default {
             login : false,//用户是否登录，判断加载不同的头部,默认未登录
             user : '',//当前的user对象
             query : '',//查询数据
-            queryUrl : baseConfig.localhost+'/conversation/selectConversationByName',//查询路径
-            messageUrl : baseConfig.localhost+'/user/selectUserUnreadMessageCountByUserId',//获取当前用户没有查看的消息
+            queryUrl : '/conversation/selectConversationByName',//查询路径
+            messageUrl : '/user/selectUserUnreadMessageCountByUserId',//获取当前用户没有查看的消息
             reply : 0,//回复数量
             activeName : 'home',//个人中心要显示的面板名称，默认为首页
-            emptyReplyUrl : baseConfig.localhost+'/conversationChildChild/updateConversationChildChildReplyByUerId'//清空未读消息
+            emptyReplyUrl : '/conversationChildChild/updateConversationChildChildReplyByUerId'//清空未读消息
         }
     },
     mounted : function(){//判断当前用户的登录状态来显示不同的头部
@@ -147,12 +147,10 @@ export default {
             this.reply++;
         },
         queryConverstation(){//查询贴吧方法
-            console.log('点击了查询。。。。。。。')
             if(this.query == null || this.query == ''){
                 this.$alert('请输入搜索关键词','提示');
                 return;
             }
-            console.log("??????????????????????"+this.query)
             //如果用户输入的关键词是漫画，跳转至漫画页面
             if(this.query == '漫画'){
               this.$router.push({
@@ -160,30 +158,25 @@ export default {
               })
               return;
             }
-            $.ajax({
-              url : this.queryUrl,
-              data : {
-                  conversationName : this.query
-              }, 
-              success : (result)=>{
-                  if(result.success){
-                    if(result.result == null){
-                        this.$alert('没有查到相应的贴吧','提示');
-                        return;
-                    }
+            this.common.ajax({
+                url : this.queryUrl,
+                data : {
+                    conversationName : this.query
+                },
+                success : (result)=>{
+                  if(!result.success){
+                      this.$alert(result.message,'提示');
+                  }else{
                     //跳转
                     location.href = "/conversationChild?conversationId="+result.result.id+'&start=1';
                   }
-              },
-              error : (result)=>{
-                  this.$alert(result.message,'提示');
-              }
+                }
             })
         },
         openLogin(){//打开登录窗口
             this.$refs.login.dialogVisible = true;
         },
-        exit(){//退出方法
+        logout(){//退出方法
             localStorage.clear();//清除localStorage
             this.toHome();
             location.reload();//重新加载页面
@@ -197,7 +190,7 @@ export default {
                 this.$refs.createConversation.dialogVisible = true;//显示创建贴吧窗口
             }
             if(command == 3){//退出
-              this.exit();
+              this.logout();
             }
         },
         toHome(){

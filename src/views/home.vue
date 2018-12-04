@@ -24,7 +24,7 @@ import bottomHome from './home/home-bottom'//底部面板
 import utilHome from './home/home-util'//工具栏
 export default {
   data(){
-    return {ccc:10}
+    return {}
   },
   components : {topHome,menuHome,bottomHome,bodyHome,utilHome},
   mounted(){
