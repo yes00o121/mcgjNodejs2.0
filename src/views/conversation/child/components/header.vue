@@ -86,7 +86,7 @@ export default {
             },
             success : (result)=>{
                 if(result.success){
-                    this.$alert('取消关注成功','提示');
+                    //this.$alert('取消关注成功','提示');
                     this.follow = false;//取消关注
                 }else{
                     this.$alert(result.message,"提示");
@@ -115,7 +115,7 @@ export default {
           },
           success : (result)=>{
               if(result.success){
-                  this.$alert('关注成功','提示');
+                  //this.$alert('关注成功','提示');
                   this.follow = true;//关注
               }else{
                   this.$alert(result.message,"提示");

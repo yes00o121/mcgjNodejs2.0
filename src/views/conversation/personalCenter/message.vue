@@ -1,7 +1,7 @@
 //消息组建
 <template>
   <div class="message-core">
-      <div style="padding:10px;">
+      <div v-if="datas.length > 0"div style="padding:10px;">
           <div></div>
           <div v-for="(data,index) in datas" style="padding:10px;border-bottom:1px solid #DCDCDC;">
               <div style="display: flex;position: relative;font-size:14px;color:#2d64b3">
@@ -21,6 +21,9 @@
           </div>
           <msgPage ref = "msgPage" @getPage = "getPage"></msgPage>
       </div>
+      <div v-else="datas.length == 0" class = "not_message">
+          没有新的回复
+      </div>
   </div>
 </template>
 <script>
@@ -29,7 +32,7 @@ import msgPage from '../../components/page'//引入分页工具
 export default {
     data(){
         return {
-           url : baseConfig.localhost+'/conversationChildChild/selectConversationChildChildReplyByUserId',//查询该用户没有处理的回复数据
+           url : '/conversationChildChild/selectConversationChildChildReplyByUserId',//查询该用户没有处理的回复数据
            datas : [],
            start : 1,//开始页数
            limit : 10,//单页数量
@@ -71,7 +74,7 @@ export default {
             this.start = val;
         },
         selectReplys(){
-            $.ajax({
+            this.common.ajax({
               url : this.url,
               data:{
                 token : this.getToken(),
@@ -86,9 +89,6 @@ export default {
                   }else{
 
                   }
-              },
-              error : ()=>{
-                throw "获取消息数据失败"
               }
             })
         },
@@ -110,10 +110,13 @@ export default {
 .message-content{
   color : #000;
   margin-bottom:10px;
-  width: 35%;
+  width : auto;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-
+.not_message{
+  text-align: center;
+  padding-bottom: 18px;
+}
 </style>

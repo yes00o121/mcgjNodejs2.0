@@ -70,10 +70,10 @@ import centerRight from './components/centerRight'//主面板右侧信息
 export default {
     data(){
       return {
-          url : this.baseConfig.localhost+'/conversation/selectConversationById',//查询当前帖子的标题头像等内容
-          floorUrl : this.baseConfig.localhost+'/conversationChild/selectConversationChildByConversationId',//当前贴吧的帖子(楼层)数据
-          publishUrl : this.baseConfig.localhost+'/conversationChild/addConversationChild',//发布帖子的方法
-          statisticsUrl : this.baseConfig.localhost+'/conversation/selectConversationStatistics',//获取用户发贴和关注量等数据
+          url : '/conversation/selectConversationById',//查询当前帖子的标题头像等内容
+          floorUrl : '/conversationChild/selectConversationChildByConversationId',//当前贴吧的帖子(楼层)数据
+          publishUrl : '/conversationChild/addConversationChild',//发布帖子的方法
+          statisticsUrl : '/conversation/selectConversationStatistics',//获取用户发贴和关注量等数据
           datas : '',//贴吧名称当前贴子标题等数据
           backgroundUrl : this.baseConfig.localhost+this.baseConfig.imgUrl+'?imgId=',
           imgUrl : this.baseConfig.localhost+this.baseConfig.imgUrl+'?imgId=',//图片地址
@@ -115,10 +115,12 @@ export default {
     appendText(){//追加贴子文字内容
       setTimeout(()=>{//暂时写成延迟加载
         for(let i=0;i<this.floor.datas.length;i++){
-            var text = this.getChinalCharacters(this.floor.datas[i].content);//获取提取后的汉字
+            //var text = this.getChinalCharacters(this.floor.datas[i].content);//获取提取后的汉字
+            let text = this.floor.datas[i].content;
             if( text != null && text.length>40){//如果大于指定字数,删除后续汉字
                 text = text.substring(0,40)+".....";
             }
+            console.log('延迟加载。。。。')
             document.getElementById('post_content_home_'+this.floor.datas[i].id).innerHTML=text;
             this.appendImage(this.floor.datas[i]);
         }
@@ -146,6 +148,9 @@ export default {
             first+=5;//获取第一张图片开始位置,加上字符串的长度
             var text = html2.substring(first,html2.length);//地址开始位置截取到末尾
             var last = text.indexOf('" />');
+            if(last == -1){
+                last = text.indexOf('">');
+            }
             var address = text.substring(0,last);//截取到图片地址末尾
             //判断地址是否为视频，如果是视频地址退出当前循环
             //如果该地址是正常的图片地址追加显示
@@ -224,7 +229,7 @@ export default {
         },
         getData(){//获取贴吧名称当前贴子标题等数据
             var id = this.id;
-            $.ajax({
+            this.common.ajax({
                 url : this.url,
                 data : {
                     id,
@@ -256,7 +261,7 @@ export default {
         var conversationId = this.id;
         var start = this.floor.start;//开始页
         var limit = this.floor.limit;//页数
-        $.ajax({
+        this.common.ajax({
             url : this.floorUrl,
             data : {
                 conversationId,
@@ -304,7 +309,7 @@ export default {
             if(user.id == this.datas.userId){
                 isManage = 1;
             }
-            $.ajax({
+            this.common.ajax({
                 url : this.publishUrl,
                 type : 'post',
                 data : {
@@ -340,7 +345,7 @@ export default {
 
         },
         getStatistics(){//获取当前贴吧发帖量，用户关注量等数据
-            $.ajax({
+            this.common.ajax({
                 url : this.statisticsUrl,
                 data : {
                     id : this.datas.id,

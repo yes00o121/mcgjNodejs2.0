@@ -2,7 +2,7 @@
 <template>
   <el-carousel :interval="4000" type="card" height="200px">
     <el-carousel-item v-for="item in limit" :key="item">
-        <router-link v-if="datas[item-1]!=null" :to="{path:'/conversationChild',query : {conversationId:datas[item-1].id,start:1}}">
+        <router-link v-if="datas[item-1]!=null"  :to="{path:'/conversationChild',query : {conversationId:datas[item-1].id,start:1}}">
           <img v-if="datas[item-1]!=null" v-bind:src= "imgUrl+datas[item-1].cardBanner" style="height:100%;width:100%">
         </router-link>
     </el-carousel-item>
@@ -12,7 +12,7 @@
 export  default{
     data(){
         return {
-            url : this.baseConfig.localhost+'/conversation/selectMaxFollow',
+            url : '/conversation/selectMaxFollow',
             imgUrl : this.baseConfig.localhost+this.baseConfig.imgUrl+'?imgId=',
             datas : {},
             limit : 6//默认要显示的卡片数量
@@ -33,7 +33,7 @@ export  default{
             this.selectMaxFollow();
         },
         selectMaxFollow(){//获取卡片所要显示的数据,按关注量查询指定的贴吧数据
-            $.ajax({
+            this.common.ajax({
                 url : this.url,
                 data : {
                   limit : this.limit

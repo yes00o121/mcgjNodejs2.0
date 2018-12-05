@@ -8,7 +8,7 @@
         <el-table-column
           prop="title"
           label="标题"
-          width="500">
+          >
           <template slot-scope="scope">
               <router-link style="color:#2d64b3;text-decoration:none;" :to="{path:'/conversationChildChild',query : {id:scope.row.conversationChildId,start:1}}" target="_blank">
                 {{scope.row.title}}
@@ -18,7 +18,7 @@
         <el-table-column
           prop="createUserName"
           label="作者"
-          width="180">
+          >
         </el-table-column>
         <el-table-column
           prop="createDate"

@@ -4,7 +4,7 @@
   <topHome></topHome>
   <!--<utilHome></utilHome>-->
   <div  id= "main">
-    <el-main style="padding:0px;width:1040px;margin:0 auto;">
+    <el-main style="padding:0px;width:1040px;margin:0 auto;padding-top:8px;padding-top: 33px;">
         <router-view></router-view>
     </el-main>
   </div>

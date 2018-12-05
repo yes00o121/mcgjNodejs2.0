@@ -50,7 +50,7 @@
       </div>
       <div v-else = "isFollowConversation">
           <h1 class="home-noFollow">
-            你还没有关注的贴吧哦
+            你还没有关注的贴吧哦,快去关注吧
           </h1>
       </div>
   </div>
@@ -60,9 +60,9 @@ import baseConfig from '../../../../config/baseConfig'
 export default {
     data(){
         return {
-            isFollowConversation : true,//用户是否关注了贴吧,默认没有
-            url : baseConfig.localhost + "/conversation/selectConversationFollow",//查询用户关注的贴吧
-            userFollowUrl : this.baseConfig.localhost+'/conversation/selectUserFollowConversation',//查询用户关注的贴吧下最新的动态数据
+            isFollowConversation : false,//用户是否关注了贴吧,默认没有
+            url : "/conversation/selectConversationFollow",//查询用户关注的贴吧
+            userFollowUrl : '/conversation/selectUserFollowConversation',//查询用户关注的贴吧下最新的动态数据
             datas : [],//用户关注的贴吧数据
             imgUrl : this.baseConfig.localhost+this.baseConfig.imgUrl+'?imgId=',//图片地址
             newConversations : {}//用户关注的贴吧最新数据
@@ -81,7 +81,7 @@ export default {
             this.selectUserFollowConversation();
         },
         selectFollow(){//查询用户关注的贴吧
-            $.ajax({
+            this.common.ajax({
               url : this.url,
               data : {
                 userId : this.getUser().id
@@ -89,6 +89,8 @@ export default {
               success : (result)=>{
                   if(result.success){
                       result = result.result;
+                      console.log('用户关注贴吧。。。。')
+                      console.log(result)
                       if(result.length>0){//用户关注的贴吧大于0
                         this.datas = result;
                         this.isFollowConversation = true;//用户有关注的贴吧
@@ -96,14 +98,11 @@ export default {
                   }else{
                       this.$alert(result.message,'提示');
                   }
-              },
-              error : ()=>{
-                  throw "查询失败";
               }
             })
         },
         selectUserFollowConversation(){//查询用户关注的贴吧下最新的动态数据
-            $.ajax({
+            this.common.ajax({
                 url : this.userFollowUrl,
                 async:false,
                 data : {
@@ -114,9 +113,6 @@ export default {
                     if(result.success){
                         this.newConversations = result.result;
                     }
-                },
-                error : ()=>{
-                    throw "查询失败"
                 }
             })
         },
@@ -128,7 +124,8 @@ export default {
             for(let i=0;i<this.newConversations.length;i++){
                 if(this.newConversations[i].content == null)
                   continue;
-                var text = this.getChinalCharacters(this.newConversations[i].content);//获取提取后的汉字
+                //var text = this.getChinalCharacters(this.newConversations[i].content);//获取提取后的汉字
+                let text = this.newConversations[i].content;
                 if( text != null && text.length>40){//如果大于指定字数,删除后续汉字
                     text = text.substring(0,40)+".....";
                 }
@@ -149,8 +146,10 @@ export default {
                 }
                 first+=5;//获取第一张图片开始位置,加上字符串的长度
                 var text = html2.substring(first,html2.length);//地址开始位置截取到末尾
-                var last = text.indexOf('">');
-
+                var last = text.indexOf('" />');
+                if(last == -1){
+                    last = text.indexOf('">');
+                }
                 var address = text.substring(0,last);//截取到图片地址末尾
                 //如果该地址是正常的图片地址追加显示
                 if(address.indexOf('img.t')==-1 && address != ""){
@@ -195,6 +194,7 @@ export default {
 }
 .home-noFollow{
   text-align: center;
+  font-size: 18px;
 }
 .home-followButton{
   margin-bottom:20px;

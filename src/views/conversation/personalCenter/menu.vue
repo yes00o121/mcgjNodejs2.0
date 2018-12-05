@@ -1,6 +1,6 @@
 <template>
-  <div style="display: flex;">
-    <div style="width: 75%;">
+  <div style="display: flex;" >
+    <div style="width:100%">
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="主页" name="home">
             <personalHome></personalHome>
@@ -9,7 +9,7 @@
           <personalMessage></personalMessage>
         </el-tab-pane>
         <el-tab-pane label="我的贴子" name="post">
-          <personalPost @publish = "publish"></personalPost>
+          <personalPost @publish = "publish" ></personalPost>
         </el-tab-pane>
         <el-tab-pane label="收藏"  name="collection">
           <personalCollection></personalCollection>

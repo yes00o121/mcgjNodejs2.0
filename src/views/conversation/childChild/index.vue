@@ -1,7 +1,7 @@
 //贴吧子贴(会话)主页面
 <template>
   <div class="conversation-child-child-core">
-      <div >
+      <div>
       <div class="conversation-name">
         <router-link :to="{path : '/conversationChild',query : {conversationId : datas.conversationId,start:1}}">
           {{datas.conversationName}}吧
@@ -296,7 +296,8 @@ export default {
   position: absolute;
 }
 .conversation-child-child-core{
-  border: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-let: 1px solid #ccc;
   width:980px;
   margin: 0px auto;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,.12), 0 0 6px 0 rgba(0,0,0,.04);

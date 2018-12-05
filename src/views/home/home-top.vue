@@ -1,6 +1,6 @@
 <template>
   <div>
-  <el-header style="height:40px">
+  <el-header style="height:40px;z-index: 100;position: fixed;width:100%">
     <div>
       <div>
           <el-input v-model="query" placeholder="请输入内容" class="el-input-style" size="mini">
@@ -194,10 +194,11 @@ export default {
             }
         },
         toHome(){
-          this.$router.push({
-            path : '/'
-          })
+          //this.$router.push({
+          //  path : '/'
+          //})
           //location.reload();//重新加载页面
+          location.href = '/';
         },
         replyEvent(event){//回复事件
             if(event == 1){

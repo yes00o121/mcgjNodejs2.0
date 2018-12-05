@@ -68,16 +68,18 @@ export default {
         setTimeout(()=>{//暂时写成延迟加载
           for(let i=0;i<this.datas.length;i++){
               var text = this.getChinalCharacters(this.datas[i].content);//获取提取后的汉字
+              //let text = this.datas[i].content;
               if( text != null && text.length>60){//如果大于指定字数,删除后续汉字
                   text = text.substring(0,60)+".....";
               }
               document.getElementById('post_content_home_'+this.datas[i].id).innerHTML=text;
               this.appendImage(this.datas[i]);
           }
-        })
+        },300)
       },
       appendImage(data){//追加图片,参数为需要解析的标签字符串和贴吧对象
           var html = data.content;//获取内容标签
+          console.log(html)
           if(html != null){
             var html2 = html;
             var index = 0;//记录添加的图片数量
@@ -88,8 +90,10 @@ export default {
               }
               first+=5;//获取第一张图片开始位置,加上字符串的长度
               var text = html2.substring(first,html2.length);//地址开始位置截取到末尾
-              var last = text.indexOf('">');
-
+              var last = text.indexOf('" />');
+              if(last == -1){
+                  last = text.indexOf('">');
+              }
               var address = text.substring(0,last);//截取到图片地址末尾
               //如果该地址是正常的图片地址追加显示
               if(address.indexOf('img.t')==-1 && address != ""&& address.indexOf('tb-video.bdstatic')==-1){
