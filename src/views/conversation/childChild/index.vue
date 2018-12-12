@@ -45,10 +45,10 @@ import childChildTitle from './components/title'//引入标题组件
 export default {
     data(){
       return {
-          url : baseConfig.localhost+'/conversationChild/selectConversationChildById',//接收贴吧名称当前贴子标题等数据
-          floorUrl : baseConfig.localhost+'/conversationChildChild/selectCCCByCCId',//当前帖子的楼层回复数据
+          url : '/conversationChild/selectConversationChildById',//接收贴吧名称当前贴子标题等数据
+          floorUrl : '/conversationChildChild/selectCCCByCCId',//当前帖子的楼层回复数据
           imgUrl : baseConfig.localhost+baseConfig.imgUrl+'?imgId=',//图片url
-          publishUrl : baseConfig.localhost+'/conversationChildChild/addConversationChildChild',//发布楼层url
+          publishUrl : '/conversationChildChild/addConversationChildChild',//发布楼层url
           datas : '',//贴吧名称当前贴子标题等数据
           floor : {//楼层数据
               datas : '',
@@ -126,7 +126,7 @@ export default {
         },
         getData(){//获取贴吧名称当前贴子标题等数据
             var id = this.id;
-            $.ajax({
+            this.common.ajax({
                 url : this.url,
                 type : 'post',
                 async : false,//同步加载
@@ -145,9 +145,6 @@ export default {
                           path : '/error'
                       })
                     }
-                },
-                error : ()=>{
-                    throw "加载失败";
                 }
             })
         },
@@ -158,7 +155,7 @@ export default {
         var conversationChildId = this.id;
         var start = this.floor.start;//开始页
         var limit = this.floor.limit;//页数
-        $.ajax({
+        this.common.ajax({
             url : this.floorUrl,
             async : false,//同步加载
             data : {
@@ -176,9 +173,6 @@ export default {
                 }else{
                   throw "加载失败";
                 }
-            },
-            error : ()=>{
-                throw "加载失败";
             }
         })
         },
@@ -200,7 +194,7 @@ export default {
             if(user.id == this.datas.userId){
                 isManage = 1;
             }
-            $.ajax({
+            this.common.ajax({
                 url : this.publishUrl,
                 data : {
                   conversationChildId,
@@ -222,9 +216,6 @@ export default {
                           });
                         }
                     }
-                },
-                error : ()=>{
-                  throw "添加失败";
                 }
             })
         },

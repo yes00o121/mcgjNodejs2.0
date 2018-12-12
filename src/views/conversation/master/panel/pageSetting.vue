@@ -48,7 +48,7 @@ export default{
   data(){
       return {
           imgUrl : this.baseConfig.localhost+this.baseConfig.imgUrl+'?imgId=',
-          saveUrl : this.baseConfig.localhost+'/conversation/updateConversation'
+          saveUrl : '/conversation/updateConversation'
       }
   },
   props : ['datas'],
@@ -68,7 +68,7 @@ export default{
             this.$alert('编辑成功','提示');
             return;
           }
-          $.ajax({
+          this.common.ajax({
               url : this.saveUrl,
               data : {
                   id : this.datas.id,

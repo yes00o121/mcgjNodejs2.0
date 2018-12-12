@@ -42,9 +42,6 @@ export  default{
                     if(result.success){
                         this.datas = result.result;
                     }
-                },
-                error : ()=>{
-                    throw "查询错误"
                 }
             })
         }

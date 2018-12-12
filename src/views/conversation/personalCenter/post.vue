@@ -43,7 +43,7 @@ export default {
         return {
             isPost : true,//默认用户没有创建过贴子
             datas : [],
-            url : this.baseConfig.localhost + '/conversationChild/selectUserPublishConversationChild',
+            url :  '/conversationChild/selectUserPublishConversationChild',
             start : 1,//默认开始页
             limit : 10,//单页显示数量
         }
@@ -54,6 +54,8 @@ export default {
     components : {page},//组件
     methods:{
         init(){//初始化方法
+            console.log('收藏...')
+            console.log(this.$refs)
             //设置单页显示数据量
             this.$refs.page.size = this.limit;
             this.selectUserPublishConversationChild();
@@ -63,7 +65,7 @@ export default {
             this.selectUserPublishConversationChild();
         },
         selectUserPublishConversationChild(){//查询用户所发表的所有帖子数据
-            $.ajax({
+            this.common.ajax({
                 url : this.url,
                 data : {
                     userId : this.getUser().id,

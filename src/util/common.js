@@ -90,5 +90,15 @@ export default{
   //安全相关方法
   security : {
 
+  },
+  //系统配置相关
+  systemConfig : {
+      //根据Key获取配置数据
+      getValue(key){
+          this.ajax({
+              url : this.baseConfig.systemConfig,
+              success : (res)=>res
+          })
+      }
   }
 }

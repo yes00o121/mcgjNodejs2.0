@@ -32,9 +32,9 @@ export default {
       return {
           imgUrl : this.baseConfig.localhost+this.baseConfig.imgUrl+'?imgId=',//图片url
           follow : false,//用户是否关注贴吧,默认为未关注
-          cancelFollowUrl : this.baseConfig.localhost+"/conversation/deleteConversationFollow",//取消用户关注贴吧
-          addFollowUrl : this.baseConfig.localhost + "/conversation/addConversationFollow",//新增用户关注贴吧
-          selectFollowUrl : this.baseConfig.localhost + "/conversation/selectConversationFollow" //查询用户对该贴的收藏状态
+          cancelFollowUrl : "/conversation/deleteConversationFollow",//取消用户关注贴吧
+          addFollowUrl :  "/conversation/addConversationFollow",//新增用户关注贴吧
+          selectFollowUrl :  "/conversation/selectConversationFollow" //查询用户对该贴的收藏状态
       }
     },
     props : ["datas"],
@@ -51,7 +51,7 @@ export default {
         }
       },
       selectFollow(userId){//查询用户关注当前贴吧的状态
-          $.ajax({
+          this.common.ajax({
               url : this.selectFollowUrl,
               data : {
                   userId : userId,//用户id
@@ -66,9 +66,6 @@ export default {
                   }else{
                       this.$alert(result.message,"提示")
                   }
-              },
-              error : ()=>{
-                  throw "查询异常"
               }
           })
       },
@@ -77,7 +74,7 @@ export default {
         .then(_ => {
           //发送请求修改用户关注该贴状态
 
-          $.ajax({
+          this.common.ajax({
             url : this.cancelFollowUrl,
             data : {
                 conversationId : this.$route.query.conversationId,
@@ -91,9 +88,6 @@ export default {
                 }else{
                     this.$alert(result.message,"提示");
                 }
-            },
-            error : () =>{
-                this.$alert('取消关注失败',"提示");
             }
           })
           //done();
@@ -106,7 +100,7 @@ export default {
       if(!this.isLogin()){//判断用户是否登录
           return;//没有登录
       }
-        $.ajax({
+        this.common.ajax({
           url : this.addFollowUrl,
           data : {
               userId : this.getUser().id,
@@ -120,9 +114,6 @@ export default {
               }else{
                   this.$alert(result.message,"提示");
               }
-          },
-          error : () =>{
-              this.$alert('关注失败',"提示");
           }
         })
       }

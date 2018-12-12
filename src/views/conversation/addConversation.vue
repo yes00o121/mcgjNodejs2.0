@@ -27,7 +27,6 @@
 import comSelect from '../components/select'//引入下拉选组件
 import comImage from '../components/upImage'//引入图片上传组件
 import comLogin from '../components/login' //引入登录窗口组件
-import baseConfig from '../../../config/baseConfig'//配置
   export default {
     data(){
       return {
@@ -37,7 +36,7 @@ import baseConfig from '../../../config/baseConfig'//配置
             photo : '',//贴吧照片
             conversationType : '',//贴吧类型
           },
-          url : baseConfig.localhost+'/conversation/addConversation',
+          url : '/conversation/addConversation',
           codeValue : 'conversation_type'//下拉选数据类型
       }
     },
@@ -57,7 +56,7 @@ import baseConfig from '../../../config/baseConfig'//配置
           var user = JSON.parse(localStorage.user);
           var conversationType = this.$refs.comSelect.value;//获取当前选中的类型id
           var photo = this.$refs.comImage.imgId;//获取图片id
-          $.ajax({
+          this.common.ajax({
             url : this.url,
             data : {
                 conversationType,
@@ -72,9 +71,6 @@ import baseConfig from '../../../config/baseConfig'//配置
                   }else{
                       this.$alert(result.message,'提示');
                   }
-            },
-            error:()=>{
-                throw "新增失败";
             }
           })
       },

@@ -19,16 +19,15 @@
                   <a href="#" style="color:#000;text-decoration:none;">{{data.conversationName}}</a>
               </div>
           </div>
-          <msgPage ref = "msgPage" @getPage = "getPage"></msgPage>
       </div>
       <div v-else="datas.length == 0" class = "not_message">
           没有新的回复
       </div>
+      <page ref = "page" @getPage = "getPage"></page>
   </div>
 </template>
 <script>
-import baseConfig from '../../../../config/baseConfig'
-import msgPage from '../../components/page'//引入分页工具
+import page from '../../components/page'//引入分页工具
 export default {
     data(){
         return {
@@ -39,12 +38,13 @@ export default {
         }
     },
     mounted(){
+      //成功引入分页初始化页数,否则不处理
       this.initPage();//设置当前分页显示的页数
       //获取当前用户未查看的回复消息数据
       this.selectReplys();
       //this.scroll();//监听浏览器,暂时不加
     },
-    components:{msgPage},//组件
+    components:{page},//组件
     updated(){
 
     },
@@ -56,7 +56,7 @@ export default {
     },
     methods : {
         initPage(){//初始化页数
-          this.$refs.msgPage.size = this.limit;//单页显示
+          this.$refs.page.size = this.limit;//单页显示
         },
         scroll(){//浏览器变化监听
             document.body.onscroll = function(){
@@ -85,7 +85,7 @@ export default {
               success : (result)=>{
                   if(result.success){
                       this.datas = result.result.conversationChildChilds;
-                      this.$refs.msgPage.total = result.result.total;//总数
+                      this.$refs.page.total = result.result.total;//总数
                   }else{
 
                   }

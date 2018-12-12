@@ -56,7 +56,7 @@ export default{
             imgUrl : baseConfig.localhost+baseConfig.imgUrl+'?imgId=',//图片url
             user : this.getUser(),//获取当前用户信息
             master : false,//是否为吧主，默认为false
-            conversationInfoUrl : this.baseConfig.localhost+'/conversation/selectConversationMaster',//查看本吧信息
+            conversationInfoUrl : '/conversation/selectConversationMaster',//查看本吧信息
             conversationData : {},//贴吧数据
             currentConversation : this.getConversation()
         }
@@ -85,7 +85,7 @@ export default{
         conversationInfo(){//查询本贴吧信息
             if(this.currentConversation == null)
               return;
-            $.ajax({
+            this.common.ajax({
                 url : this.conversationInfoUrl,
                 data : {
                     id : this.currentConversation.id
@@ -95,9 +95,6 @@ export default{
                         console.log('成功。。。')
                         this.conversationData = result.result;
                     }
-                },
-                error : ()=>{
-                    throw "查询错误"
                 }
             })
         },
@@ -115,10 +112,11 @@ export default{
             }
         },
         toMaster(){//跳转到吧务管理页面
-            this.$router.push({
-              path : '/master',
-              query : {conversationId : this.datas.id}
-            })
+            //this.$router.push({
+          //    path : '/master',
+            //  query : {conversationId : this.datas.id}
+          //  })
+            location.href='/master?conversationId='+this.datas.id;
         }
     }
 }

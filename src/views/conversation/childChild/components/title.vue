@@ -19,16 +19,15 @@
 </div>
 </template>
 <script>
-import baseConfig from '../../../../../config/baseConfig'
 export default {
    data(){
       return {
-          url : baseConfig.localhost+'/conversationChild/addConversationChildCollection',//新增收藏
-          cancelCollectionUrl : baseConfig.localhost+'/conversationChild/deleteConversationChildCollection',//取消收藏
+          url : '/conversationChild/addConversationChildCollection',//新增收藏
+          cancelCollectionUrl : '/conversationChild/deleteConversationChildCollection',//取消收藏
           state : false,//是否收藏该帖，默认为false
           isFollr : false,//默认不是楼主
           lookFollr : false,//默认不是只看楼主
-          selectUrl : baseConfig.localhost+'/conversationChild/selectConversationChildCollection'//查询收藏的数据
+          selectUrl : '/conversationChild/selectConversationChildCollection'//查询收藏的数据
       }
    },
    props : ["datas"],
@@ -59,10 +58,9 @@ export default {
          document.getElementById('wangEditor').scrollIntoView();
       },
       initCollection(){//初始化用户该贴的收藏状态
-          $.ajax({
+          this.common.ajax({
               url : this.selectUrl,
               data : {
-                token : this.getToken(),
                 userId : this.getUser().id,
                 conversationChildId : this.datas.id
               },
@@ -71,12 +69,7 @@ export default {
                       if(result.result != null){
                           this.state = true;
                       }
-                  }else{
-                      throw "查询收藏失败"
                   }
-              },
-              error : ()=>{
-                  throw "查询收藏失败"
               }
           })
       },
@@ -90,17 +83,16 @@ export default {
           }
           var user = this.getUser();//获取当前用户数据
           var conversationChildId = this.datas.id;
-          $.ajax({
+          this.common.ajax({
               url : this.url,
               data : {
                   userId : user.id,
-                  conversationChildId,
-                  token : user.token
+                  conversationChildId
               },
               success : (result)=>{
                     if(result.success){
                         this.state = true;
-                        this.$alert(result.message,'提示');
+                        //this.$alert(result.message,'提示');
                     }else{
                       if(result.state == 2){
                         this.$alert(result.message,'提示',{
@@ -110,9 +102,6 @@ export default {
                         });
                       }
                     }
-              },
-              error : ()=>{
-                  throw "收藏失败"
               }
           })
       },
@@ -120,7 +109,7 @@ export default {
           this.$confirm('是否取消收藏？')
           .then(_ => {
             this.state = false;
-            $.ajax({
+            this.common.ajax({
                 url : this.cancelCollectionUrl,
                 type : 'post',
                 data : {
@@ -129,15 +118,8 @@ export default {
                     conversationChildId : this.datas.id
                 },
                 success : (result)=>{
-                    if(result.success){
-                        this.state = false;
-                        this.$alert(result.message,'提示');
-                    }else{
-                        throw "取消收藏失败"
-                    }
-                },
-                error : ()=>{
-                    throw "取消收藏失败"
+                    this.state = false;
+                    //this.$alert(result.message,'提示');
                 }
             })
             //done();

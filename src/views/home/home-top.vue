@@ -1,6 +1,6 @@
 <template>
   <div>
-  <el-header style="height:40px;z-index: 100;position: fixed;width:100%">
+  <el-header style="height:40px;">
     <div>
       <div>
           <el-input v-model="query" placeholder="请输入内容" class="el-input-style" size="mini">
@@ -8,47 +8,47 @@
               <el-button slot="append" icon="el-icon-search" @click.stop="queryConverstation"></el-button>
           </el-input>
       </div>
-    </div>
     <!-- 登录的top -->
-    <div v-if="login" class="right-alignment">
-        <el-dropdown size="mini" :hide-on-click="false" @command="handleCommand">
-          <span class="el-dropdown-link">
-          {{user.userName}}<i class="el-icon-arrow-down el-icon--right"></i>
-          </span>
-          <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="1">
-            <router-link :to="{path:'/personalCenter'}">
-              个人中心
-            </router-link>
-          </el-dropdown-item>
-          <el-dropdown-item command="2">创建贴吧</el-dropdown-item>
-          <el-dropdown-item command="3">退出</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-        <el-dropdown style="margin-left:10px" size="mini" :hide-on-click="false" @command="replyEvent">
-          <span class="el-dropdown-link">
-          消息<el-badge id="message" style="visibility:hidden;" is-dot></el-badge><i class="el-icon-arrow-down el-icon--right"></i>
-          </span>
-          <el-dropdown-menu slot="dropdown">
-            <!-- 暂时隐藏评论功能 -->
-            <el-dropdown-item command="1" class="clearfix" style="display:none">
-              评论
-              <el-badge class="mark" :value="0" />
+      <div v-if="login" class="right-alignment">
+          <el-dropdown size="mini" :hide-on-click="false" @command="handleCommand">
+            <span class="el-dropdown-link">
+            {{user.userName}}<i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="1">
+              <router-link :to="{path:'/personalCenter'}">
+                个人中心
+              </router-link>
             </el-dropdown-item>
-            <el-dropdown-item command = "2" class="clearfix" >
-              回复
-              <el-badge class="mark" :value="reply" />
-            </el-dropdown-item>
+            <el-dropdown-item command="2">创建贴吧</el-dropdown-item>
+            <el-dropdown-item command="3">退出</el-dropdown-item>
             </el-dropdown-menu>
-        </el-dropdown>
-        <createConversation ref="createConversation"></createConversation>
-    </div>
-    <!-- 没有登录的top -->
-    <div v-else="login" class="right-alignment">
-      <a class="word-color" href="#" @click="openLogin">登录</a>
-      <login ref="login"></login>
-      <span class="word-color" >|</span>
-      <a class="word-color" href = "#">注册</a>
+          </el-dropdown>
+          <el-dropdown style="margin-left:10px" size="mini" :hide-on-click="false" @command="replyEvent">
+            <span class="el-dropdown-link">
+            消息<el-badge id="message" style="visibility:hidden;" is-dot></el-badge><i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <!-- 暂时隐藏评论功能 -->
+              <el-dropdown-item command="1" class="clearfix" style="display:none">
+                评论
+                <el-badge class="mark" :value="0" />
+              </el-dropdown-item>
+              <el-dropdown-item command = "2" class="clearfix" >
+                回复
+                <el-badge class="mark" :value="reply" />
+              </el-dropdown-item>
+              </el-dropdown-menu>
+          </el-dropdown>
+          <createConversation ref="createConversation"></createConversation>
+      </div>
+      <!-- 没有登录的top -->
+      <div v-else="login" class="right-alignment">
+        <a class="word-color" href="#" @click="openLogin">登录</a>
+        <login ref="login"></login>
+        <span class="word-color" >|</span>
+        <a class="word-color" href = "#">注册</a>
+      </div>
     </div>
     </el-header>
   </div>
@@ -79,7 +79,7 @@ export default {
             //获取当前的user对象
             this.user = JSON.parse(localStorage.user)
             //websocket.initWebSocketConnection();
-            var websocket = new WebSocket(baseConfig.websocket+'?token='+this.getToken());
+            var websocket = new WebSocket(baseConfig.websocket+this.getToken());
             websocket.onclose=function(){//连接关闭监听
                 console.log('websocket连接关闭');
             }
@@ -110,7 +110,7 @@ export default {
         loadMessage(){//加载用户消息状态
             //判断用户是否登录
             if(login){
-                $.ajax({
+                this.common.ajax({
                     url : this.messageUrl,
                     data : {
                         userId : this.getUser().id
@@ -128,8 +128,6 @@ export default {
                                       this.reply = res[i].message;
                                   }
                               }
-                        }else{
-                            throw "消息加载错误";
                         }
                     },
                     error : (result)=>{
@@ -215,7 +213,7 @@ export default {
             }
         },
         emptyReply(){//清空用户未读消息
-            $.ajax({
+            this.common.ajax({
                 url : this.emptyReplyUrl,
                 type : 'post',
                 data : {

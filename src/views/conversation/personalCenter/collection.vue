@@ -32,11 +32,10 @@
   </div>
 </template>
 <script>
-import baseConfig from '../../../../config/baseConfig'
 export default {
     data(){
         return {
-          url : baseConfig.localhost+'/user/selectCollectionConversationChildByUserId',
+          url : '/user/selectCollectionConversationChildByUserId',
           datas: [],
           isCollection : false//是否有收藏贴子，默认为false
         }
@@ -49,7 +48,7 @@ export default {
            this.getData();
         },
         getData(){
-            $.ajax({
+            this.common.ajax({
                 url : this.url,
                 type : 'post',
                 data : {

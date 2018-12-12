@@ -3,7 +3,10 @@
   <div class="personal-core">
   <div class="personal-header">
     <img v-bind:src="imgUrl+user.photo" class="personal-photo">
-    <div class="personal-header-top"></div>
+    <!-- 卡片背景  -->
+    <div class="personal-header-top">
+
+    </div>
     <div class="personal-header-center">
     <el-button  style="margin-left:25%;color:blue" size="mini" class="el-icon-edit">编辑资料</el-button>
     </div>

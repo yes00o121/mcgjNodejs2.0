@@ -11,7 +11,7 @@ import masterMenu from './menu'//引入菜单组件
 export default{
   data(){
       return {
-          url : this.baseConfig.localhost+'/conversation/selectConversationById',//查询当前帖子的标题头像等内容
+          url : '/conversation/selectConversationById',//查询当前帖子的标题头像等内容
           datas : JSON.parse(localStorage.currentConversation)//对应的贴吧数据
       }
   },
@@ -37,7 +37,7 @@ export default{
       },
       getConversationData(){//获取当前贴吧数据
           /*
-          $.ajax({
+          this.common.ajax({
               url : this.url,
               async : false,
               data : {
@@ -50,9 +50,6 @@ export default{
                   }else{
                       this.$alert(result.message,'提示');
                   }
-              },
-              error : ()=>{
-                  throw "查询错误"
               }
           })
           */

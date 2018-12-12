@@ -3,7 +3,6 @@
 <el-dialog
   title="登录"
   :visible.sync="dialogVisible"
-
   :before-close="handleClose">
   <el-form  ref="form" :model="form">
     <el-form-item label="账号"  class="login-input">

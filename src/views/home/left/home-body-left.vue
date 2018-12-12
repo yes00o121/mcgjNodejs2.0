@@ -22,7 +22,7 @@
 export default {
   data(){
     return {
-        url : this.baseConfig.localhost + '/conversation/selectConversationTypeAndData',//获取贴吧数据
+        url : '/conversation/selectConversationTypeAndData',//获取贴吧数据
         datas : {}
     };
   },
@@ -34,7 +34,7 @@ export default {
             this.selectConversationTypeAndData();
       },
       selectConversationTypeAndData(){
-          $.ajax({
+          this.common.ajax({
               url : this.url,
               success : (result)=>{
                     if(result.success){

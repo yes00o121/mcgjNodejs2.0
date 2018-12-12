@@ -1,5 +1,5 @@
+import baseConfig from '../../config/baseConfig'
 //静态方法工具类
-export var a = 10;
 var websocket = null;
 //得到websocket连接
   //websocket = new websocket('ws：//'+baseConfig.localhost+'/websocket');
@@ -11,7 +11,7 @@ var websocket = null;
     var user = localStorage.user == null ? null : JSON.parse(localStorage.user);
     if(user != null){
       //创建webSocket连接
-      websocket = new WebSocket('ws://127.0.0.1:8090/websocket?token='+user.token);
+      websocket = new WebSocket(baseConfig.websocket+user.token);
     }else{
       return;//退出
     }

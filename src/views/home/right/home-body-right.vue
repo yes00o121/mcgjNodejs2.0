@@ -42,7 +42,7 @@ export default {
   data(){
     return {
         activeName : 'yesterday',//默认展示标签
-        url : this.baseConfig.localhost+ '/conversationChild/selectMaxConversationChildByDay',
+        url : '/conversationChild/selectMaxConversationChildByDay',
         day : 1,//默认为一天
         datas : {}
     };
@@ -62,7 +62,7 @@ export default {
           this.selectMaxConversationChildByDay();//刷新数据
       },
       selectMaxConversationChildByDay(){
-          $.ajax({
+          this.common.ajax({
               url : this.url,
               data:{
                   day : this.day
@@ -71,9 +71,6 @@ export default {
                     if(result.success){
                         this.datas = result.result;
                     }
-              },
-              error :()=>{
-                  throw "查询失败"
               }
           })
       }
