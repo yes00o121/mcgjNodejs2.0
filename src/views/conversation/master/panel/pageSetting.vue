@@ -9,6 +9,7 @@
             <div style="text-align: center;padding-top:20px;">头像</div>
             <!--
             <div style="width:100%;text-align: center;margin-top: 20px;">
+                <!-- 用户头像 -->
                 <img id="conversationPhoto" v-bind:src='imgUrl+datas.photo' style="width:150px;height:150px;">
             </div>
             -->

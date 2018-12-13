@@ -2,11 +2,11 @@
 <template>
   <div class="personal-core">
   <div class="personal-header">
-    <img v-bind:src="imgUrl+user.photo" class="personal-photo">
-    <!-- 卡片背景  -->
-    <div class="personal-header-top">
 
-    </div>
+    <img v-if="user.photo != null && user.photo != ''" v-bind:src="imgUrl+user.photo" class="personal-photo">
+    <img v-else="user.photo == null || user.photo == ''" v-bind:src="getSystemConfig('master.photo')" class="personal-photo">
+    <!-- 卡片背景  -->
+    <div class="personal-header-top " style="background-size: contain;"></div>
     <div class="personal-header-center">
     <el-button  style="margin-left:25%;color:blue" size="mini" class="el-icon-edit">编辑资料</el-button>
     </div>
@@ -44,15 +44,22 @@ export default {
     }
   },
   mounted:function(){
+  console.log(this.common.systemConfig.getValue('master.photo'))
+  //var a = this.common.systemConfig.getValue('master.photo')
       this.init();
   },
   components : {personalMenu},
   methods : {
     init(){
-        window.bb = this.$refs;
+        //window.bb = this.$refs;
+        var value = this.getSystemConfig('master.card_banner');
+        $('.personal-header-top').css('background-image',"url("+value+")")
     },
     publish(value){
         this.publishNumber = value;
+    },
+    getSystemConfig(key){
+       return this.common.systemConfig.getValue(key);
     }
   }
 
@@ -60,7 +67,7 @@ export default {
 </script>
 <style>
 .personal-top{
-  /*background-image:url('/static/img/personal-top.jpg');*/
+  background-image:url('/static/img/master_card.jsp');
   background-color : black;
   width : 100%;
   height : 50%;

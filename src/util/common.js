@@ -95,10 +95,18 @@ export default{
   systemConfig : {
       //根据Key获取配置数据
       getValue(key){
-          this.ajax({
-              url : this.baseConfig.systemConfig,
-              success : (res)=>res
-          })
+        var value = null;
+        $.ajax({
+          url : baseConfig.localhost + baseConfig.systemConfig,
+          async : false,
+          data:{
+            key
+          },
+          success : (res)=>{
+            value = res;
+          }
+        })
+        return value;
       }
   }
 }
