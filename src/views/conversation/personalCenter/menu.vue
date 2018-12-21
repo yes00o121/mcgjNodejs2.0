@@ -1,8 +1,8 @@
 <template>
   <div style="display: flex;" >
-    <div style="width:100%">
-      <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="主页" name="home">
+    <div style="width:100%" >
+      <el-tabs v-model="activeName" @tab-click="handleClick" >
+        <el-tab-pane label="主页" name="home" >
             <personalHome></personalHome>
         </el-tab-pane>
         <el-tab-pane label="回复我的" name="message">

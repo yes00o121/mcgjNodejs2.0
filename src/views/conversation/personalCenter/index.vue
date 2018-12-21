@@ -103,7 +103,7 @@ export default {
 }
 .personal-header-center{
   height:10%;
-  background-color:blue
+  background-color:#D0E9FF
 }
 .personal-header-bottom{
   height:35%;
