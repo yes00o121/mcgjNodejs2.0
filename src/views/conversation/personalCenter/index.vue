@@ -2,13 +2,14 @@
 <template>
   <div class="personal-core">
   <div class="personal-header">
-
     <img v-if="user.photo != null && user.photo != ''" v-bind:src="imgUrl+user.photo" class="personal-photo">
     <img v-else="user.photo == null || user.photo == ''" v-bind:src="getSystemConfig('master.photo')" class="personal-photo">
     <!-- 卡片背景  -->
     <div class="personal-header-top " style="background-size: contain;"></div>
     <div class="personal-header-center">
-    <el-button  style="margin-left:25%;color:blue" size="mini" class="el-icon-edit">编辑资料</el-button>
+    <router-link :to="{path : '/personalCenter/setting'}">
+          <el-button  style="margin-left:25%;color:blue" size="mini" class="el-icon-edit">编辑资料</el-button>
+    </router-link>
     </div>
     <div class="personal-header-bottom">
         <div style="padding-top: 10px;">
@@ -35,6 +36,7 @@
 <script>
 import baseConfig from '../../../../config/baseConfig'//配置
 import personalMenu from './menu'//菜单组建
+import setting from './setting'
 export default {
   data(){
     return {
@@ -60,6 +62,12 @@ export default {
     },
     getSystemConfig(key){
        return this.common.systemConfig.getValue(key);
+    },
+    //跳转至个人设置页面
+    toSetting(){
+        this.$router.push({
+            path : '/personalCenter/setting'
+        })
     }
   }
 
@@ -87,7 +95,7 @@ export default {
 }
 .personal-core{
   padding:0px;
-  width:800px;
+  width:799px;
   margin:0 auto;
   margin-top : 10px;
   border : 1px solid #DCDCDC;

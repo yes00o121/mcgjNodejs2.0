@@ -4,7 +4,9 @@
     <div class="conversation-header">
       <div class="conversation-header-top" >
           <img v-if="datas.cardBanner != null && datas.cardBanner != ''" v-bind:src='imgUrl+datas.cardBanner' style="width:100%;height:100%">
-          <img v-else v-bind:src="getSystemConfig('conversation.card')">
+          <span  v-if="datas.cardBanner == null || datas.cardBanner == ''">
+            <img class="img" v-bind:src="getSystemConfig('conversation.card')">
+          </span>
       </div>
       <div class="conversation-header-bottom">
           <div style="padding-top: 10px;">
@@ -125,5 +127,7 @@ export default {
 }
 </script>
 <style>
-
+.img{
+  height:100%
+}
 </style>

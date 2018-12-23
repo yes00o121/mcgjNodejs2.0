@@ -22,12 +22,9 @@
                         <el-button size="mini" style="height:25px">{{data.replyNumber}}</el-button>
                       </span>
                     </div>
-                    <div v-bind:id = "'post_content_home_'+data.id" style="font-size:14px;color:#666;line-height:24px">
-                        <!-- 内容为追加显示 -->
+                    <div v-html="conversationChildFilter(data.content)">
+
                     </div>
-                    <ul style="margin: 10px 0 6px;height:100px;display: flex;" v-bind:id = "'post_content_image_'+data.id">
-                        <!-- 内容为追加显示 -->
-                    </ul>
                     <div style="padding-top: 2px;font-size:12px;color:#999">
                         <img v-bind:src="imgUrl+data.photo" style="height: 15px;border-radius: 50%;">
                         <a href="#" style="color:#999;margin-left:5px;">{{data.userName}}</a>

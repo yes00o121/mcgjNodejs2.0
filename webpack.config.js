@@ -105,6 +105,10 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
+    }),
+    new httpWebpackPlugin({
+        template : path.join(__dirname,'./index.html'),
+        filename : 'index.html'
     })
   ])
 }

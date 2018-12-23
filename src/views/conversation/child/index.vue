@@ -33,9 +33,10 @@
                                 </div>
                             </div>
                         </div>
-                        <ul style="margin: 10px 0 6px;height:100px;display: -webkit-box;overflow: hidden;width:500px;" v-bind:id = "'post_content_image_'+data.id">
-                            <!-- 内容为追加显示 -->
-                        </ul>
+                        <!-- 渲染内容 -->
+                        <div v-html="conversationChildFilter(data.content)">
+
+                        </div>
                         <div style="padding-top: 2px;font-size:12px;color:#999">
                             <img v-bind:src="imgUrl+data.photo" style="height: 15px;border-radius: 50%;">
                             <a href="#" style="color:#999;margin-left:5px;">{{data.userName}}</a>
@@ -91,10 +92,6 @@ export default {
     },
     mounted(){//加载页面数据
       this.init();//初始化页面数据
-      this.append();
-      //window.onload = (()=>{
-
-      //})
     },
     components : {replyPanel,login,page,wangEditor,childHeader,centerRight},//引入组件
     watch:{
@@ -109,118 +106,6 @@ export default {
 
     },
     methods : {
-    append(){//追加数据
-        this.appendText();
-    },
-    appendText(){//追加贴子文字内容
-      setTimeout(()=>{//暂时写成延迟加载
-        for(let i=0;i<this.floor.datas.length;i++){
-            //var text = this.getChinalCharacters(this.floor.datas[i].content);//获取提取后的汉字
-            let text = this.floor.datas[i].content;
-            if( text != null && text.length>40){//如果大于指定字数,删除后续汉字
-                text = text.substring(0,40)+".....";
-            }
-            console.log('延迟加载。。。。')
-            document.getElementById('post_content_home_'+this.floor.datas[i].id).innerHTML=text;
-            this.appendImage(this.floor.datas[i]);
-        }
-      },200)
-    },
-    getChinalCharacters(html){//提取出标签内的文字
-        var reg=/[\u4E00-\u9FA5]/g;
-        var result=html.match(reg,'');
-        if(result != null){
-            return result.join().replace(/,/g,'');
-        }
-        return '';
-    },
-    appendImage(data){//追加图片,参数为需要解析的标签字符串和贴吧对象
-        var html = data.content;//获取内容标签
-        if(html != null){
-          var html2 = html;
-          var index = 0;//记录添加的图片数量
-          $('#post_content_image_'+data.id+' li').remove();
-          for(let i = 0;i<3;i++){
-            var first = html2.indexOf('src="');
-            if(first == -1){//表示用户发表的贴子内容没有附带图片，直接退出
-                break;
-            }
-            first+=5;//获取第一张图片开始位置,加上字符串的长度
-            var text = html2.substring(first,html2.length);//地址开始位置截取到末尾
-            var last = text.indexOf('" />');
-            if(last == -1){
-                last = text.indexOf('">');
-            }
-            var address = text.substring(0,last);//截取到图片地址末尾
-            //判断地址是否为视频，如果是视频地址退出当前循环
-            //如果该地址是正常的图片地址追加显示
-            if(address.indexOf('img.t')==-1 && address != "" && address.indexOf('tb-video.bdstatic')==-1){
-                  $('#post_content_image_'+data.id).append(`
-                      <div style="height: 100%;margin-right: 10px;">
-                        <img style="height:100%" src= "${address}">
-                      </div>
-                  `);
-                  index++;//添加了图片，记录索引
-            }
-            //获取实际的最后一个">位置
-            var actualLast = html2.indexOf('">')+2;
-            //如果actualLast小于first表示没有取到图片之后的位置,继续获取
-              if(actualLast<first){
-                  actualLast = last+first;
-              }
-            //获取截取图片之后的字符串
-            html2 = html2.substring(actualLast,html.length);
-
-          }
-          //如果循环结束了index还是为0，表示用户没有发表图片，删除图片div
-          if(index == 0){
-              $('#post_content_image_'+data.id).remove();
-          }
-        }
-
-    },
-        appendContent(){
-          var datas = this.floor.datas;
-          for(let i = 0;i<datas.length;i++){
-              var elements = $(datas[i].content);
-              $('#post_img_'+datas[i].id).val('');
-              $('#post_content_'+datas[i].id).val('');
-              var imgNum = 0;//记录显示的图片张数
-              //获取所有的图片元素
-              for(let j =0;j<elements.length;j++){
-                if(elements[j].localName == 'img'){//追加图片
-                    //如果图片是表情不进行追加
-                    if(elements[j].src.search('http://img.t.sinajs.cn') != -1 || imgNum == 3){
-                        continue;
-                    }
-                    //if(elements[j].src)
-                    //elements[j].style.width="160px"
-                    elements[j].style.height="100px"
-                    if(j>1)
-                    elements[j].style.marginLeft="20px"
-                    document.getElementById('post_img_'+datas[i].id).append(elements[j]);
-                    ++imgNum;
-                }else{
-                  if(elements[j].localName == 'p'){//追加文本
-                    $('#post_content_'+datas[i].id).val('');
-                    document.getElementById('post_content_'+datas[i].id).append(elements[0]);
-                    //判断p下是否有图片,图片最大为三张
-                    var img = $(elements[j]).find('img');
-                    for(var k=0;k<img.length;k++){
-                        if(img[k].src.search('http://img.t.sinajs.cn') != -1 || imgNum == 3){
-                          continue;
-                        }
-                        //img[k].style.width="160px"
-                        img[k].style.height="100px"
-                        img[k].style.marginRight = "10px"
-                        document.getElementById('post_img_'+datas[i].id).append(img[k]);
-                        ++imgNum;
-                    }
-                  }
-                }
-              }
-          }
-        },
         init(){
           //this.$refs.page.currentPage = this.floor.start;//当前页
           this.$refs.page.size = this.floor.limit;//设置分页组件的页数
@@ -251,45 +136,40 @@ export default {
                         path : '/error'
                        })
                     }
-                },
-                error : ()=>{
-                    throw "加载失败";
                 }
             })
         },
         getfloorDatas(){//获取楼层数据
-        var conversationId = this.id;
-        var start = this.floor.start;//开始页
-        var limit = this.floor.limit;//页数
-        this.common.ajax({
-            url : this.floorUrl,
-            data : {
-                conversationId,
-                start,
-                limit,
-                token : this.getToken()
-            },
-            success : (result)=>{
-                if(result.success){
-                    this.floor.datas = result.result.conversationChilds;
-                    this.floor.total = result.result.size;
-                    //this.$nextTick(function(){
-                    //    this.appendContent();
-                    //})
-                    //获取贴吧数据后进行吧主判断,判断是否为吧主，是否显示吧务按钮,由于数据datas的传值速度慢于子组件的加载速度，故延迟加载子组件的获取
-                    setTimeout(()=>{
-                      //判断用户是否登录
-                      if(this.getUser()!= null)
-                        this.$refs.centerRight.isMaster();
-                    },100)
-                }else{
-                  throw "加载失败";
-                }
-            },
-            error : ()=>{
-                throw "加载失败";
-            }
-        })
+          var conversationId = this.id;
+          var start = this.floor.start;//开始页
+          var limit = this.floor.limit;//页数
+          this.common.ajax({
+              url : this.floorUrl,
+              data : {
+                  conversationId,
+                  start,
+                  limit,
+                  token : this.getToken()
+              },
+              success : (result)=>{
+                  if(result.success){
+                      this.floor.datas = result.result.conversationChilds;
+                      this.floor.total = result.result.size;
+                      this.loadData(this.floor.datas);//追加贴子内容
+                      //this.$nextTick(function(){
+                      //    this.appendContent();
+                      //})
+                      //获取贴吧数据后进行吧主判断,判断是否为吧主，是否显示吧务按钮,由于数据datas的传值速度慢于子组件的加载速度，故延迟加载子组件的获取
+                      setTimeout(()=>{
+                        //判断用户是否登录
+                        if(this.getUser()!= null)
+                          this.$refs.centerRight.isMaster();
+                      },100)
+                  }else{
+                    throw "加载失败";
+                  }
+              }
+          })
         },
         publish(content){//发布方法,接收子组件数据
           if(!this.isLogin()){//判断用户是否登录
@@ -392,7 +272,6 @@ export default {
 }
 .conversation-header-top{
   height:70%;
-  background-color:black
 }
 .conversation-header-bottom{
   height:30%;

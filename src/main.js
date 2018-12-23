@@ -6,6 +6,8 @@ import E from 'wangeditor'//富文本框
 import 'element-ui/lib/theme-chalk/index.css'//elementui 样式
 import baseConfig from '../config/baseConfig'//配置
 import common from './util/common'//通用工具
+import filters from './util/filter.js'//引入全局过滤器
+import './util/overallMethod.js'//引入全局方法
 Vue.use(Element)
 Vue.use(router);
 Vue.prototype.baseConfig = baseConfig;//设置全局配置文件
@@ -86,8 +88,13 @@ Vue.prototype.reset = function(){
 }
 //initWebSocketConnection();//创建webSocket连接
 /********************************************** 全局方法 ************************************************************/
-new Vue({
+console.log('!!')
+console.log(filters)
+var vm = new Vue({
   el: '#app',
   router,
+  filters,
   render: h => h(App)
 })
+
+window.aa = vm;

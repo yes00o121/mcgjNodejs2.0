@@ -4,13 +4,16 @@ import home from '../views/home'
 import homeBody from '../views/home/home-body'
 import conversationChildChild from '../views/conversation/childChild'//帖子组件
 import conversationChild from '../views/conversation/child'//贴吧组件
-import personalCenter from '../views/conversation/personalCenter'//个人中心组建
+//import personalCenter from '../views/conversation/personalCenter'//个人中心组建
 import master from '../views/conversation/master'//吧务管理组件
 import masterConversationManage from '../views/conversation/master/panel/conversationManage'//吧务贴子组件
 import masterPageSetting from '../views/conversation/master/panel/pageSetting'//吧务页面管理组件
 import masterUserManage from '../views/conversation/master/panel/userManage'//吧务吧员管理组件
 import error from '../views/components/error'//页面错误组件
 import manga from '../views/home/mangaHome'
+//个人中心
+import {personalCenter,settingView} from './personalCenter.js'//个人中心组件
+
 Vue.use(Router)
 export default new Router({
   mode: 'history',
@@ -37,11 +40,11 @@ export default new Router({
       path: '/conversationChildChild',//帖子主页面
       name : 'conversationChildChild',
       component: conversationChildChild,
-    },{
+    },personalCenter,settingView,/*{
     path: '/personalCenter',//帖子主页面
     name : 'personalCenter',
     component: personalCenter
-  },{//吧务管理页面
+  },*/{//吧务管理页面
     path : '/master',
     name : 'master',
     component:master,
