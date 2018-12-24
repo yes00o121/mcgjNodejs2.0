@@ -41,7 +41,7 @@ export default {
 .home-core{
   margin-left:-8px;
   margin-right:-8px;
-
+  
 }
 h1, h2 {
   font-weight: normal;

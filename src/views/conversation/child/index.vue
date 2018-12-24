@@ -112,6 +112,10 @@ export default {
           this.getData();
           this.getfloorDatas();//获取楼层数据
         },
+        bigImg(){
+          //放大图片
+          this.bigImg();
+        },
         getData(){//获取贴吧名称当前贴子标题等数据
             var id = this.id;
             this.common.ajax({
@@ -155,7 +159,6 @@ export default {
                   if(result.success){
                       this.floor.datas = result.result.conversationChilds;
                       this.floor.total = result.result.size;
-                      this.loadData(this.floor.datas);//追加贴子内容
                       //this.$nextTick(function(){
                       //    this.appendContent();
                       //})

@@ -34,12 +34,9 @@
                       {{data.title}}
                     </router-link>
                     </div>
-                    <div v-bind:id = "'personalConter_home'+data.id" style="font-size:12px;color:#666;line-height:24px">
-                        <!-- 内容为追加显示 -->
+                    <div v-html="conversationChildFilter(data.content)">
+
                     </div>
-                    <ul style="margin: 10px 0 6px;height:80px;display: flex;" v-bind:id = "'personalConter_home_image_'+data.id">
-                        <!-- 内容为追加显示 -->
-                    </ul>
                     <div style="padding-top: 2px;font-size:12px;color:#999">
                         <a href="#" style="color:#999;">{{data.userName}}</a>
                         <span style="padding-left:21px;">{{handlerDate(data.lastTime)}}</span>

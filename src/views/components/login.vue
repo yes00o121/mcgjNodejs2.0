@@ -6,15 +6,15 @@
   :before-close="handleClose">
   <el-form  ref="form" :model="form">
     <el-form-item label="账号"  class="login-input">
-      <el-input v-model="form.account" ></el-input>
+      <el-input v-model="form.account" @keyup.enter.native="login"></el-input>
     </el-form-item>
-    <el-form-item  label = "密码" class="login-input">
-        <el-input type="password" v-model="form.password"></el-input>
+    <el-form-item  label = "密码" class="login-input" >
+        <el-input type="password" v-model="form.password" @keyup.enter.native="login"></el-input>
     </el-form-item>
     <el-form-item label = "验证码" style="width:200px">
         <el-row >
           <el-col :span="10">
-              <el-input v-model="form.checkCode" style="width:120px;"></el-input>
+              <el-input v-model="form.checkCode" style="width:120px;" @keyup.enter.native="login"></el-input>
           </el-col>
           <el-col :span="6">
               <img :src="yzUrl" class="login-verificationCode" @click="loadverificationCode"/>
@@ -24,7 +24,7 @@
   </el-form>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="add" >确 定</el-button>
+    <el-button type="primary" @click="login" >确 定</el-button>
   </span>
   </el-dialog>
 </template>
@@ -51,7 +51,7 @@ export default {
     handleClose(done) {//关闭窗口
           done();
     },
-    add(){//用户登录方法
+    login(){//用户登录方法
         this.common.ajax({
           url : this.loginUrl,
           type : 'post',

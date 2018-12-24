@@ -1,5 +1,28 @@
 //全局方法定义
 import Vue from 'vue'
+
+
+//定义全局放大图片方法
+window.bigImg = (img)=>{
+  $('body').append(`
+        <div id="bigImg" onclick="$('#bigImg').remove()">
+          <div  class="v-modal" tabindex="0" style="z-index: 2001;">
+          </div>
+          <div class="el-message-box__wrapper" style="z-index:2050" >
+              <div class="el-message-box" style="width: auto;border: 1px solid #606266;padding-bottom:0;background-color:transparent;border:hidden;-webkit-box-shadow: black;box-shadow: none;">
+                  <div>
+                        <img style="width:100%;" src="${img}">
+                  </div>
+              </div>
+          </div>
+        </div>
+    `)
+  //  <div class="el-message-box__wrapper" style="z-index:2050" >
+    //    <img style="width:auto;" src="${img}">
+    //</div>
+    //style="z-index: 2050;position: fixed;top:0;width: 100%;text-align: center;height: 100%;margin-left: 10px;overflow-y: auto;"
+}
+
 //过滤贴子内容的html标签，将图片和内容分开展示
 Vue.prototype.conversationChildFilter = (data)=>{
     let element = "";//重组的元素
@@ -39,7 +62,7 @@ var getImageElement = (elements)=>{
       tempStr = tempStr.substring(startIndex);//直接将前面的内容做掉,避免受到其他标签影响获取索引错误
       let endIndex = tempStr.indexOf('>')+1;//获取结尾标签
       var img = tempStr.substring(0,endIndex);
-      img = img.replace(' ',' style="height:100%" ')//图片追加样式,第一个空格的位置追加样式
+      img = img.replace(' ',' style="height:100%;cursor: pointer;"  onclick="bigImg(this.src)" ')//图片追加样式,第一个空格的位置追加样式
       imgArr.push(img);//获取图片元素
       //console.log(tempStr.substring(0,endIndex))
       //console.log(tempStr.substring(startIndex,endIndex))
@@ -47,6 +70,9 @@ var getImageElement = (elements)=>{
       //console.log(tempStr)
   }
   return imgArr;
+}
+Vue.prototype.test=function(){
+  console.log('???')
 }
 
 
