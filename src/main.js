@@ -35,9 +35,9 @@ Vue.prototype.isLogin=function(){//全局方法，判断用户是否登录
     //localStorage.user数据正常没有被用户修改过
     return true;
   }else{
+    localStorage.clear();//清空用户
     //用户没有登录,打开登录窗口
      this.$alert('请先登录!','提示');
-     localStorage.clear();//重置用户
      //this.$refs.login.dialogVisible = true;
      //login.dialogVisible = true;
      return false;
@@ -89,8 +89,7 @@ Vue.prototype.reset = function(){
 }
 //initWebSocketConnection();//创建webSocket连接
 /********************************************** 全局方法 ************************************************************/
-console.log('!!')
-console.log(filters)
+
 var vm = new Vue({
   el: '#app',
   router,

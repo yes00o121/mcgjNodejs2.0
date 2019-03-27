@@ -57,6 +57,7 @@
 import baseConfig from '../../../config/baseConfig'
 import login from '../components/login'//引入登录窗口组件
 import createConversation from '../conversation/addConversation'//创建贴吧窗口组件
+import wsocket from '../../util/websocket.js'
 export default {
     data(){
         return {
@@ -78,7 +79,10 @@ export default {
             this.loadMessage();//加载用户消息状态
             //获取当前的user对象
             this.user = JSON.parse(localStorage.user)
-            //websocket.initWebSocketConnection();
+            console.log('???')
+            console.log(wsocket)
+            wsocket.init();
+            /*
             var websocket = new WebSocket(baseConfig.websocket+this.getToken());
             websocket.onclose=function(){//连接关闭监听
                 console.log('websocket连接关闭');
@@ -102,6 +106,7 @@ export default {
                   websocket.close();
               }
             };
+            */
         }
         /******************************************************************/
 
@@ -118,13 +123,11 @@ export default {
                     success : (result)=>{
                         if(result.success){
                               var res = result.result;
-                              console.log(res)
                               for(let i = 0;i<res.length;i++){
                                   if(res[i].message != 0){
                                     this.showDot();
                                   }
                                   if(res[i].msgType == 'reply'){//处理回复数据
-                                      console.log('接收消息成功'+res[i])
                                       this.reply = res[i].message;
                                   }
                               }

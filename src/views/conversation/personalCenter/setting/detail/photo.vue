@@ -1,6 +1,6 @@
 //吧务管理页面，吧主有操作的权限
 <template>
-  <div>
+  <div class="photo-core" >
 
   </div>
 </template>
@@ -23,5 +23,8 @@ export default{
 }
 </script>
 <style>
-
+.photo-core{
+    height:550px;
+    width: 900px;
+}
 </style>

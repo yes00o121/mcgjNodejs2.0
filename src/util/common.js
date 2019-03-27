@@ -12,6 +12,9 @@ export default{
     //拼接域名
     param.url = baseConfig.localhost + param.url;
     param.data.token = this.user.getToken();
+    if(param.type == null){
+      param.type = "POST";
+    }
     if(!param.success){
       param.success =(res)=>{
           console.log('请求成功')
