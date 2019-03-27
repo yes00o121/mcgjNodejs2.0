@@ -3,24 +3,6 @@ import common from './common'
 export default {
      websocket : null,
      init(){
-       //初始化前判断用户会话是否过期
-       common.ajax({
-         url : '/user/selectUserIsEffective',
-         async : false,//同步
-         success : (res)=>{
-            console.log(res)
-            if(!res.success){
-               //用户会话过期,清空localStorage.clear()
-               this.$alert('用户登录超时,请重新登录','提示',{
-                   confirmButtonText: '确定',
-                   callback: action => {
-                       localStorage.clear();//清空用户
-                       location.reload();
-                   }
-               })
-            }
-         }
-       })
        //页面重新加载时判断用户登录状态，创建websocket连接
        var user = localStorage.user == null ? null : JSON.parse(localStorage.user);
        if(user != null){
