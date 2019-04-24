@@ -1,6 +1,6 @@
-# vue1.0
+# mcgjNodejs2.0
 
-> A Vue.js project
+> Vue.js project
 
 ## Build Setup
 
