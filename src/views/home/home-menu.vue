@@ -1,3 +1,4 @@
+<!-- 菜单尚未使用-->
 <template>
   <div>
     <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">

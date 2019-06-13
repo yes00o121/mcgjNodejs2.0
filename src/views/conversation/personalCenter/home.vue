@@ -86,8 +86,6 @@ export default {
               success : (result)=>{
                   if(result.success){
                       result = result.result;
-                      console.log('用户关注贴吧。。。。')
-                      console.log(result)
                       if(result.length>0){//用户关注的贴吧大于0
                         this.datas = result;
                         this.isFollowConversation = true;//用户有关注的贴吧

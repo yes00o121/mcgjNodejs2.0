@@ -27,6 +27,7 @@ export default new Router({
       name : 'home',
       component: home,
       children : [
+
         {
           path: '/',//首页内容组件
           name : 'homeBody',

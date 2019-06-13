@@ -3,7 +3,8 @@
   <el-carousel :interval="4000" type="card" height="200px">
     <el-carousel-item v-for="item in limit" :key="item">
         <router-link v-if="datas[item-1]!=null"  :to="{path:'/conversationChild',query : {conversationId:datas[item-1].id,start:1}}">
-          <img v-if="datas[item-1]!=null" v-bind:src= "imgUrl+datas[item-1].cardBanner" style="height:100%;width:100%">
+          <img v-if="datas[item-1].cardBanner !=null" v-bind:src= "imgUrl+datas[item-1].cardBanner" style="height:100%;width:100%">
+          <img v-if = "datas[item-1].cardBanner == null " v-bind:src = "randomImgUrl + datas[item-1].conversationName" style="height:100%;width:100%">
         </router-link>
     </el-carousel-item>
   </el-carousel>
@@ -14,8 +15,9 @@ export  default{
         return {
             url : '/conversation/selectMaxFollow',
             imgUrl : this.baseConfig.localhost+this.baseConfig.imgUrl+'?imgId=',
+            randomImgUrl : this.baseConfig.localhost + '/common/getCardWorkImage?content=',
             datas : {},
-            limit : 6//默认要显示的卡片数量
+            limit : parseInt(this.common.systemConfig.getValue('home.cardBanner.number'))//默认要显示的卡片数量
         }
     },
     mounted(){
@@ -26,8 +28,6 @@ export  default{
             this.$router.push({
                 path : '/conversation'
             })
-            console.log('点击之后。。')
-            console.log(value)
         },
         init(){
             this.selectMaxFollow();

@@ -1,44 +1,13 @@
 //界面设置
 <template>
-  <div class = "master-center-core">
-    <div style = "border-bottom:1px solid #e1e1e1;height:10%">
-        <h1 style="margin-left:50px;">界面设置</h1>
-    </div>
-    <div style="display: inline-flex;width:100%;height:85%;margin-top:5px;">
-        <div class= "center-pageSetting">
-            <div style="text-align: center;padding-top:20px;">头像</div>
-            <!--
-            <div style="width:100%;text-align: center;margin-top: 20px;">
-                <!-- 用户头像 -->
-                <img id="conversationPhoto" v-bind:src='imgUrl+datas.photo' style="width:150px;height:150px;">
-            </div>
-            -->
-            <div style="width:100%;text-align: center;margin-top: 20px;">
-              <upImage id="conversationPhoto" ref="upImage"></upImage>
-            </div>
-            <div style="width:100%;text-align:center;margin-top: 20px;">
-              <el-button size="mini" @click="savePhoto">保存</el-button>
-            </div>
-        </div>
-        <div class= "center-pageSetting" >
-            <div style="text-align: center;padding-top:20px;">横幅</div>
-            <div style="width:100%;text-align: center;margin-top: 20px;">
-              <cardBannerImage  ref="cardBannerImage"></cardBannerImage>
-            </div>
-            <div style="width:100%;text-align:center;margin-top: 20px;">
-              <el-button size="mini" @click="saveCardBanner">保存</el-button>
-            </div>
-        </div>
-        <div class= "center-pageSetting" >
-            <div style="text-align: center;padding-top:20px;">背景</div>
-            <div style="width:100%;text-align: center;margin-top: 20px;">
-              <backgroundImage  ref="backgroundImage"></backgroundImage>
-            </div>
-            <div style="width:100%;text-align:center;margin-top: 20px;">
-              <el-button size="mini" @click="saveBackground">保存</el-button>
-            </div>
-        </div>
-    </div>
+  <div class="demo-image">
+      <div class="block" v-for="fit in fits" :key="fit">
+      <span class="demonstration">{{ fit }}</span>
+      <el-image
+      style="width: 100px; height: 100px"
+      :src="url"
+      :fit="fit"></el-image>
+      </div>
   </div>
 </template>
 <script>
@@ -48,6 +17,9 @@ import backgroundImage from '../../../components/upImage'//上传背景组件
 export default{
   data(){
       return {
+          fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
+          url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+          src: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
           imgUrl : this.baseConfig.localhost+this.baseConfig.imgUrl+'?imgId=',
           saveUrl : '/conversation/updateConversation'
       }
@@ -55,7 +27,7 @@ export default{
   props : ['datas'],
   components : {upImage,backgroundImage,cardBannerImage},
   mounted(){
-    this.init();
+    //this.init();
   },
   methods : {
       init(){//初始化

@@ -1,46 +1,27 @@
 //吧务管理菜单页面
 <template>
-    <el-row class="tac" >
-    <el-col >
-      <el-menu
-        default-active="1"
-        class="el-menu-vertical-demo"
-        @open="handleOpen"
-        @close="handleClose"
-        background-color="#D0DBED"
-        text-color="#fff"
-        active-text-color="black"
-        >
-        <el-menu-item class="master-menu-style" index="1" @click="toCenter('/master')">
-          <i class="el-icon-menu"></i>
-          <span slot="title" >界面管理</span>
-        </el-menu-item>
-        <el-menu-item index="2" class="master-menu-style" @click="toCenter('/master/conversationManage')" disabled>
-          <i class="el-icon-document"></i>
-          <span slot="title">贴子管理</span>
-        </el-menu-item>
-        <el-menu-item class="master-menu-style" @click="toCenter('/master/userManage')" index="3">
-          <i class="el-icon-setting"></i>
-          <span slot="title">吧员管理</span>
-        </el-menu-item>
-        <el-menu-item class="master-menu-style" index="4">
-          <i class="el-icon-setting"></i>
-          <span slot="title">待定</span>
-        </el-menu-item>
-        <el-menu-item class="master-menu-style" index="5">
-          <i class="el-icon-setting"></i>
-          <span slot="title">待定</span>
-        </el-menu-item>
-        <el-menu-item class="master-menu-style" index="6">
-          <i class="el-icon-setting"></i>
-          <span slot="title">待定</span>
-        </el-menu-item>
-        <el-menu-item class="master-menu-style" index="7">
-          <i class="el-icon-setting"></i>
-          <span slot="title">待定</span>
-        </el-menu-item>
-      </el-menu>
-    </el-col>
+  <el-row class="tac" >
+  <el-col :span="12">
+  <el-menu
+    default-active="1"
+    class="el-menu-vertical-demo left-menu"
+    @open="handleOpen"
+    @close="handleClose" >
+
+    <el-menu-item index="1" style="margin-left:10px">
+      <i class="el-icon-menu"></i>
+      <span slot="title">界面管理</span>
+    </el-menu-item>
+    <el-menu-item index="2" disabled>
+      <i class="el-icon-document"></i>
+      <span slot="title">贴子管理</span>
+    </el-menu-item>
+    <el-menu-item index="3">
+      <i class="el-icon-setting"></i>
+      <span slot="title">吧员管理</span>
+    </el-menu-item>
+  </el-menu>
+  </el-col>
   </el-row>
 </template>
 <script>
@@ -78,5 +59,10 @@ export default{
 }
 </script>
 <style>
+    .left-menu{
+        display: table-caption;
+        /*border : 1px solid rgb(220, 223, 230);*/
+        box-shadow: 0 2px 4px 0 rgba(0,0,0,.12), 0 0 6px 0 rgba(0,0,0,.04);
 
+    }
 </style>

@@ -17,13 +17,11 @@ export default{
   },
   mounted(){
     this.init();
-
-    console.log($('.master-center-core')[0])
-    $('.master-center-core')[0].style.height=window.outerHeight-300+"px"//初始化中心高度
+    //$('.master-center-core')[0].style.height=window.outerHeight-300+"px"//初始化中心高度
   },
   updated(){
-      if($('.master-center-core')[0] != null)
-        $('.master-center-core')[0].style.height=window.outerHeight-300+"px"//初始化中心高度
+      //if($('.master-center-core')[0] != null)
+      //  $('.master-center-core')[0].style.height=window.outerHeight-300+"px"//初始化中心高度
   },
   methods: {
       init(){
@@ -66,12 +64,12 @@ export default{
 }
 .master-core-layout{
   display: inline-flex;
-  width:100%
+  width:100%;
 }
 .master-center-core{
   margin-left: 50px;
   border:1px solid #e1e1e1;
   width:85%;
-  background-color : white;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.12), 0 0 6px 0 rgba(0,0,0,.04);
 }
 </style>
