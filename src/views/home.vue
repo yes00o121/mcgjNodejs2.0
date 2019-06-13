@@ -22,12 +22,11 @@ import menuHome from './home/home-menu'//菜单面板,暂不使用
 import bodyHome from './home/home-body'//核心面板
 import bottomHome from './home/home-bottom'//底部面板
 import utilHome from './home/home-util'//工具栏
-import homeBody from './home/home-body'
 export default {
   data(){
     return {}
   },
-  components : {topHome,menuHome,bottomHome,bodyHome,utilHome,homeBody},
+  components : {topHome,menuHome,bottomHome,bodyHome,utilHome},
   mounted(){
 
   },

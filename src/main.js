@@ -21,6 +21,15 @@ router.beforeEach((to,form,next)=>{//路由拦截
         name : 'error'
     })
   }
+  //如果是首页默认追加
+  if(to.name == 'home'){
+    console.log(router)
+    console.log(router.options.routes)
+    /*
+    router.push({
+      path : '/homeBody'
+    })*/
+  }
   next();
 })
 router.afterEach(()=>{//页面跳转之后触发
