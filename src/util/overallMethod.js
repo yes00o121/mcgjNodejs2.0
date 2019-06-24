@@ -1,6 +1,6 @@
 //全局方法定义
 import Vue from 'vue'
-
+import baseConfig from '../../config/baseConfig'
 
 //定义全局放大图片方法
 window.bigImg = (img)=>{
@@ -62,7 +62,7 @@ var getImageElement = (elements)=>{
       tempStr = tempStr.substring(startIndex);//直接将前面的内容做掉,避免受到其他标签影响获取索引错误
       let endIndex = tempStr.indexOf('>')+1;//获取结尾标签
       var img = tempStr.substring(0,endIndex);
-      img = img.replace(' ',' style="height:100%;cursor: pointer;"  onclick="bigImg(this.src)" ')//图片追加样式,第一个空格的位置追加样式
+      img = img.replace('http://127.0.0.1:8090/mcgj/',baseConfig.localhost).replace(' ',' style="height:100%;cursor: pointer;"  onclick="bigImg(this.src)" ')//图片追加样式,第一个空格的位置追加样式,请求ip改为配置的ip
       imgArr.push(img);//获取图片元素
       //console.log(tempStr.substring(0,endIndex))
       //console.log(tempStr.substring(startIndex,endIndex))
